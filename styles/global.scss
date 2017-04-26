@@ -1,0 +1,17 @@
+@import 'globals/custom-bootstrap.scss';
+
+@font-face {
+  font-family: Lato;
+  src: url('../static/fonts/Lato-Regular.ttf');
+}
+
+body {
+  font-family: Lato, sans-serif;
+}
+
+.svg-icon {
+  height:auto;
+  width:50px;
+}
+
+@import 'globals/helpers.scss';
