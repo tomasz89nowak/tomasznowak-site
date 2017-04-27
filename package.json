@@ -10,7 +10,7 @@
     "start:dev": "npm-run-all -p watch-css dev",
     "start:prod": "npm-run-all -p build-css prod",
     "build-css": "node-sass styles/ -o static/css/",
-    "watch-css": "npm run build-css && node-sass ./ -o styles/ --watch --recursive"
+    "watch-css": "npm run build-css && node-sass ./styles -o static/css/ --watch --recursive"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,55 @@
+@import '../globals/variables.scss';
+
+.about-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid #f55254;
+  box-shadow: 1px 2px 10px;
+  margin-top: -120px;
+}
+
+.about-panel {
+  margin-top:120px;
+  .panel-heading{
+    background-color: $grey;
+  }
+  h1 {
+    color:#f55254;
+  }
+}
+
+.skill-progress {
+  position: relative;
+  border: 1px solid #ccc;
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(245,82,84,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(245,82,84,1)));
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(245,82,84,1) 100%);
+  background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(245,82,84,1) 100%);
+  background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(245,82,84,1) 100%);
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(245,82,84,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f55254', GradientType=1 );
+  height:10px;
+  margin-bottom:20px;
+  border-radius: 10px;
+  .stage {
+    width: 33.3%;
+    height: 8px;
+    display:inline-block;
+    > span {
+      position: relative;
+      top:15px;
+    }
+  }
+  .stage:not(:last-child){
+    border-right:2px solid;
+  }
+  
+  .indicator {
+    height: 18px;
+    position: absolute;
+    border-right: 6px solid #666;
+    top: -5px;
+  }
+}

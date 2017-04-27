@@ -1,3 +1,27 @@
-.linkedin-icon {
+.linkedin-icon:hover {
+  transition: 200ms;
+  cursor:pointer;
   color:#0084bf;
+}
+
+.twitter-icon:hover {
+  transition: 200ms;
+  cursor:pointer;
+  color:#1da1f2;
+}
+
+.facebook-icon:hover {
+  transition: 200ms;
+  cursor:pointer;
+  color:#3b5998;
+}
+
+.github-icon:hover {
+  transition: 200ms;
+  cursor:pointer;
+  color:#000;
+}
+
+article {
+  margin-top:40px;
 }
