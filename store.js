@@ -1,19 +1,12 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import {reducer as articles} from './ducks/articles';
-import {reducer as about} from './ducks/about';
+import reducers from './ducks';
 
 const middleware = [thunk];
 let composedMiddleware = applyMiddleware(...middleware);
 
-const reducers = combineReducers({
-  articles,
-  about
-});
-
-export const initStore = (aa) => {
-const store = createStore(reducers, composedMiddleware);
-  return store;
+export const initStore = () => {
+  return createStore(reducers, composedMiddleware);
 };
 
 

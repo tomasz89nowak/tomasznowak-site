@@ -74,20 +74,26 @@ class Index extends React.Component {
           }
         </div>
 
-        <article>
-          {articles.map(article =>
-            <div key={article._id} className="panel panel-article md-6 md-offset-3 sm-10 sm-offset-1">
-              <div className="panel-body">
-                <h2>{article.title}</h2>
-                <small>{getDate(article.createdAt, 'humanize')}</small>
-                <p>{article.content}</p>
-              </div>
-            </div>
-          )}
-        </article>
+        <Articles articles={articles} />
       </div>
     )
   }
+}
+
+function Articles({articles}){
+  return (
+    <article>
+      {articles.map(article =>
+        <div key={article._id} className="panel panel-article md-6 md-offset-3 sm-10 sm-offset-1">
+          <div className="panel-body">
+            <Link href={{pathname: '/article', query: {id: article._id}}}><h2><a>{article.title}</a></h2></Link>
+            <small>{getDate(article.createdAt, 'humanize')}</small>
+            <p>{article.content}</p>
+          </div>
+        </div>
+      )}
+    </article>
+  )
 }
 
 

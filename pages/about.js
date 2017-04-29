@@ -9,6 +9,7 @@ import Head from 'next/head';
 import Header from '../Components/Header';
 
 import {getAbout} from '../ducks/about';
+import {getSkills, deleteSkill} from '../ducks/skills';
 
 
 class About extends React.Component {
@@ -18,10 +19,13 @@ class About extends React.Component {
 
   componentDidMount(){
     this.props.dispatch(getAbout());
+    if(this.props.skills.length === 0) {
+      this.props.dispatch(getSkills());
+    }
   }
 
   render(){
-    const {url, about} = this.props;
+    const {url, about, skills} = this.props;
     return (
       <div className="container">
 
@@ -50,15 +54,18 @@ class About extends React.Component {
           <div className="text-center sm-12">
             <h2>Experience</h2>
           </div>
-
-          <div className="text-center md-4 sm-6">
-            <div className="panel">
-              <div className="panel-body">
-                <h3>Javascript</h3>
-                <Progress progress={0} />
+          {skills.map(skill =>
+            <div key={skill._id} className="text-center md-4 sm-6">
+              <div className="panel">
+                <div className="panel-body">
+                  <button onClick={()=>this.props.dispatch(deleteSkill(skill._id))}>delete</button>
+                  <h3>{skill.name}</h3>
+                  <Progress progress={skill.progress} />
+                </div>
               </div>
             </div>
-          </div>
+
+          )}
         </article>
       </div>
     )
@@ -78,7 +85,8 @@ function Progress({progress = 0}){
 
 function mapState(state){
   return {
-    about: state.about.result || {}
+    about: state.about.result || {},
+    skills: state.skills.result || []
   }
 }
 

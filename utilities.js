@@ -43,3 +43,16 @@ export function humanizeDate(day){
     case '12': return 'december'; break;
   }
 }
+
+export function getError(error) {
+  console.log(error)
+  return (
+    <div className="error">
+      {error ? <span>{error}</span> : null}
+    </div>
+  );
+}
+
+export function handleError(error, errorName){
+  return getError(error ? (error[errorName] ? typeof error[errorName] === 'string' ? error[errorName] :(error[errorName][0]) : null) : null)
+}
