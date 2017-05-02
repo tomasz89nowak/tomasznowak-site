@@ -39,21 +39,28 @@ function fetch(attrs){
   let requestType;
   let successType;
   let failureType;
+  let deleteType;
   // types can be passed as array (required specific order!). Can be strings or functions
   if(Array.isArray(types) === true) {
     requestType = types[0];
     successType = types[1];
     failureType = types[2];
+    deleteType =  types[3];
   } else {
     // types can be also passed as object attributes (specific amount and order is not required, you can omit one or two of types). Can be strings or functions
     requestType = types.request;
     successType = types.success;
     failureType = types.failure;
+    deleteType = types.delete;
   }
   return dispatch => {
     handleDispatch(requestType, dispatch);
     return axios(axiosParams).then(resp =>{
-      handleDispatch(successType, dispatch, resp.data, extraData);
+      if(method.toLowerCase() === 'get') {
+        handleDispatch(successType, dispatch, resp.data, extraData, method);
+      } else if (method.toLowerCase() === 'delete') {
+        handleDispatch(deleteType, dispatch, resp.data, extraData, method);
+      }
       return {status: 'success', data: resp.data, extraData};
     }).catch(err =>{
       // eslint-disable-next-line
@@ -65,11 +72,11 @@ function fetch(attrs){
   }
 }
 
-function handleDispatch(type, dispatch, data, extraData){
+function handleDispatch(type, dispatch, data, extraData, method){
   // If type is string, fires an action; if type is function, fires a function.
   // You can run other action creator instead of action.
   if(type && typeof type === 'string'){
-    dispatch({type, data, extraData});
+    dispatch({type, data, extraData, method});
   } else if(type && typeof type === 'function'){
     dispatch(type);
   }

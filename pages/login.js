@@ -58,11 +58,11 @@ class Login extends React.Component {
         <Head>
           <title>Tomasz Nowak - frontend && javascript developer</title>
           <link href="./static/css/global.css" rel="stylesheet" type="text/css" />
-          <link href="./static/css/pages/about.css" rel="stylesheet" type="text/css" />
+          <link href="./static/css/about.css" rel="stylesheet" type="text/css" />
         </Head>
         <Header url={url.pathname} />
 
-        <div className="sm-6">
+        <div className="sm-6 sm-offset-3">
           <div className="panel">
             <div className="panel-body">
               <form className="form" onSubmit={this.submit} ref={form => this.form = form}>

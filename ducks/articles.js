@@ -1,16 +1,27 @@
 import {generateReducer} from '../store';
 import fetch from '../apiMiddleware';
 
-const GET_REQUEST = '/articles/GET_REQUEST';
+const REQUEST = '/articles/REQUEST';
 const GET_SUCCESS = '/articles/GET_SUCCESS';
-const GET_FAILURE = '/articles/GET_FAILURE';
+const FAILURE = '/articles/FAILURE';
+const DELETE_SUCCESS = '/articles/:id/DELETE_SUCCESS';
 
-export const reducer = generateReducer([GET_REQUEST, GET_SUCCESS, GET_FAILURE]);
+export const reducer = generateReducer([REQUEST, GET_SUCCESS, FAILURE, DELETE_SUCCESS]);
 
 export function getArticles() {
   return fetch({
     url: 'articles/',
-    types: [GET_REQUEST, GET_SUCCESS, GET_FAILURE],
+    types: [REQUEST, GET_SUCCESS, FAILURE],
     auth: false
+  });
+}
+
+
+export function deleteArticle(id) {
+  return fetch({
+    method: 'DELETE',
+    url: 'articles/' + id + '/',
+    types: [REQUEST, null, FAILURE, DELETE_SUCCESS],
+    extraData: {id}
   });
 }

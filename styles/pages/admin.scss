@@ -1,0 +1,53 @@
+@import '../globals/variables.scss';
+
+.admin__sidebar {
+  a {
+    width: 100%;
+    display: block;
+    padding: 10px 15px;
+    letter-spacing: 0.5px;
+    transition:150ms;
+    color:#666;
+    text-transform: capitalize;
+    &:hover {
+      background-color: $primary-color;
+      color: #fff;
+    }
+  }
+  .active {
+    background-color: $primary-color;
+    color: #fff;
+  }
+}
+
+.admin__articles-list {
+  .admin__article {
+    padding:5px 10px;
+    background-color: #fff;
+    small {
+      display:block;
+    }
+  }
+  .panel-footer {
+    padding: 5px 10px;
+    button, a {
+      border-radius:0;
+    }
+  }
+}
+
+.admin__users-list {
+  .admin__user {
+    padding:5px 10px;
+    background-color: #fff;
+    small {
+      display:block;
+    }
+  }
+  .panel-footer {
+    padding: 5px 10px;
+    button, a {
+      border-radius:0;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+
 export function getDate(data, humanize){
   if (!data) {return '---'}
   let date = new Date(data);
@@ -45,7 +46,6 @@ export function humanizeDate(day){
 }
 
 export function getError(error) {
-  console.log(error)
   return (
     <div className="error">
       {error ? <span>{error}</span> : null}
@@ -54,5 +54,26 @@ export function getError(error) {
 }
 
 export function handleError(error, errorName){
-  return getError(error ? (error[errorName] ? typeof error[errorName] === 'string' ? error[errorName] :(error[errorName][0]) : null) : null)
+  if(error && error[errorName]) {
+    if(typeof error[errorName] === 'string') {
+      return getError(error[errorName]);
+    } else if (error[errorName] instanceof Array) {
+      return getError(error[errorName][0]);
+    } else {
+      return getError(error[errorName].message);
+    }
+  }
+  // return getError(error ? (error[errorName] ? typeof error[errorName] === 'string' ? error[errorName] :(error[errorName][0]) : null) : null)
 }
+
+export function Loader() {
+  return <img style={loaderStyles} src="./static/images/loader.svg"/>
+}
+
+const loaderStyles = {
+  position: 'fixed',
+  zIndex: 1,
+  left: '50%',
+  top: '50%',
+  transform: 'translate(-50%, -50%)',
+};

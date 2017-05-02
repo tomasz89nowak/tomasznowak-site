@@ -7,6 +7,7 @@ import {STATIC_URL} from '../ENDPOINTS';
 import Head from 'next/head';
 
 import Header from '../Components/Header';
+import {Loader} from '../utilities';
 
 import {getAbout} from '../ducks/about';
 import {getSkills, deleteSkill} from '../ducks/skills';
@@ -25,14 +26,14 @@ class About extends React.Component {
   }
 
   render(){
-    const {url, about, skills} = this.props;
+    const {url, about, skills, isFetching} = this.props;
     return (
       <div className="container">
 
         <Head>
           <title>Tomasz Nowak - frontend && javascript developer</title>
           <link href="./static/css/global.css" rel="stylesheet" type="text/css" />
-          <link href="./static/css/pages/about.css" rel="stylesheet" type="text/css" />
+          <link href="./static/css/about.css" rel="stylesheet" type="text/css" />
         </Head>
 
         <Header url={url.pathname} />
@@ -67,6 +68,7 @@ class About extends React.Component {
 
           )}
         </article>
+        {isFetching && <Loader/>}
       </div>
     )
   }
@@ -86,7 +88,8 @@ function Progress({progress = 0}){
 function mapState(state){
   return {
     about: state.about.result || {},
-    skills: state.skills.result || []
+    skills: state.skills.result || [],
+    isFetching: state.about.isFetching || state.skills.isFetching
   }
 }
 

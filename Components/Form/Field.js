@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {handleError} from '../../utilities';
+import FileInput from './FileInput';
 
 class Field extends React.Component {
   static getInitialProps() {
@@ -63,14 +64,34 @@ class Field extends React.Component {
 
   insertField(){
     // validate and onChange attributes are not used, but cannot be passed to input
-    const {field = 'input', type = 'text', validate, error, onChange, ...other} = this.props;
+    const {field = 'input', type = 'text', validate, error, onChange, label, checkboxLabel, ...other} = this.props;
     switch(field) {
       case 'input':
-        return <input onChange={this.handleChangeInput} type={type} {...other} />;
+        return (
+          <div>
+            {label && <label>{label}</label>}
+            <input onChange={this.handleChangeInput} type={type} {...other} />
+            {checkboxLabel && <label>{checkboxLabel}</label>}
+          </div>
+        );
       case 'textarea':
-        return <textarea onChange={this.handleChangeInput} {...other} />;
+        return (
+          <div>
+            {label && <label>{label}</label>}
+            <textarea onChange={this.handleChangeInput} {...other} />
+          </div>
+        );
       case 'select':
-        return <select onChange={this.handleChangeSelect} {...other}>{this.props.children}</select>
+        return (
+          <div>
+            {label && <label>{label}</label>}
+            <select onChange={this.handleChangeSelect} {...other}>{this.props.children}</select>
+          </div>
+        );
+      case 'file':
+        return (
+          <FileInput {...this.props} />
+        )
     }
   }
 
@@ -84,6 +105,8 @@ class Field extends React.Component {
     )
   }
 }
+
+
 
 Field.propTypes = {
   field: PropTypes.string,

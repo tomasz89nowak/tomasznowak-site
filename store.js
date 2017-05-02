@@ -36,6 +36,18 @@ export function generateReducer(types, initialState = {
           isFetching: false,
           error: action.data || true
         };
+      case types[3]:
+        // delete
+        const newResult = state.result.filter(elem => elem._id !== action.extraData.id);
+        return {
+          ...state,
+          result: newResult,
+          isFetching: false,
+          error: false
+        };
+        return {
+
+        };
       default:
         return state;
     }

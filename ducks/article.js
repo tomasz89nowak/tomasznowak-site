@@ -21,3 +21,21 @@ export function clearArticle(){
     dispatch({type: CLEAR});
   }
 }
+
+export function postArticle(data) {
+  return fetch({
+    method: 'POST',
+    url: 'articles/',
+    types: [GET_REQUEST, GET_SUCCESS, GET_FAILURE],
+    data
+  });
+}
+
+export function putArticle(data, id) {
+  return fetch({
+    method: 'PUT',
+    url: 'articles/' + id + '/',
+    types: [GET_REQUEST, GET_SUCCESS, GET_FAILURE],
+    data
+  });
+}

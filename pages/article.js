@@ -31,7 +31,7 @@ class Article extends React.Component {
         <Head>
           <title>Tomasz Nowak - frontend && javascript developer</title>
           <link href="./static/css/global.css" rel="stylesheet" type="text/css" />
-          <link href="./static/css/pages/article.css" rel="stylesheet" type="text/css" />
+          <link href="./static/css/article.css" rel="stylesheet" type="text/css" />
         </Head>
 
         <Header url={url.pathname} />

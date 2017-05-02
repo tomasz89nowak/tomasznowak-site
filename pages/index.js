@@ -15,7 +15,7 @@ import Header from '../Components/Header';
 import {getArticles} from '../ducks/articles';
 import {getAbout} from '../ducks/about';
 
-import {getDate} from '../utilities';
+import {getDate, Loader} from '../utilities';
 
 class Index extends React.Component {
   static getInitialProps({store, isServer}){
@@ -28,7 +28,7 @@ class Index extends React.Component {
   }
 
   render(){
-    const {about, articles} = this.props;
+    const {about, articles, url, isFetching} = this.props;
 
     return (
       <div className="container">
@@ -36,10 +36,11 @@ class Index extends React.Component {
         <Head>
           <title>Tomasz Nowak - frontend && javascript developer</title>
           <link href="./static/css/global.css" rel="stylesheet" type="text/css" />
-          <link href="./static/css/pages/index.css" rel="stylesheet" type="text/css" />
+          <link href="./static/css/index.css" rel="stylesheet" type="text/css" />
         </Head>
 
-        <Header activeBtn={1} />
+        <Header url={url.pathname} />
+
         <div className="text-center">
           <h1 className="font-ss">{about.name}</h1>
           <h2>{about.title}</h2>
@@ -75,6 +76,7 @@ class Index extends React.Component {
         </div>
 
         <Articles articles={articles} />
+        {isFetching && <Loader/>}
       </div>
     )
   }
@@ -96,12 +98,11 @@ function Articles({articles}){
   )
 }
 
-
-
 function mapState(state){
   return {
     articles: state.articles.result || [],
-    about: state.about.result || {}
+    about: state.about.result || {},
+    isFetching: state.articles.isFetching || state.about.isFetching
   }
 }
 
