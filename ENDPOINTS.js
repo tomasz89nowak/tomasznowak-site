@@ -1,2 +1,2 @@
-export const API_URL = 'http://localhost:8000/api/';
-export const STATIC_URL = 'http://localhost:8000/';
+export const API_URL = 'http://tomasznowak.net.pl/api/';
+export const STATIC_URL = 'http://tomasznowak.net.pl/';
