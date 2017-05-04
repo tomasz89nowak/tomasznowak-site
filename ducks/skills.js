@@ -1,29 +1,55 @@
 import {generateReducer} from '../store';
 import fetch from '../apiMiddleware';
 
-const GET_REQUEST = '/about/skills/GET_REQUEST';
-const GET_SUCCESS = '/about/skills/GET_SUCCESS';
-const GET_FAILURE = '/about/skills/GET_FAILURE';
+const REQUEST = '/about/skills/REQUEST';
+const SUCCESS = '/about/skills/SUCCESS';
+const FAILURE = '/about/skills/FAILURE';
+const DELETE_SUCCESS = '/about/skills/DELETE_SUCCESS';
 
-export const reducer = generateReducer([GET_REQUEST, GET_SUCCESS, GET_FAILURE]);
+export const reducer = generateReducer([REQUEST, SUCCESS, FAILURE, DELETE_SUCCESS]);
 
 export function getSkills() {
   return fetch({
     url: 'about/skills',
-    types: [GET_REQUEST, GET_SUCCESS, GET_FAILURE],
+    types: [REQUEST, SUCCESS, FAILURE],
     auth: false
   });
 }
-
-const DELETE_REQUEST = '/about/skills/DELETE_REQUEST';
-const DELETE_SUCCESS = '/about/skills/DELETE_SUCCESS';
-const DELETE_FAILURE = '/about/skills/DELETE_FAILURE';
 
 export function deleteSkill(id) {
   return fetch({
     method: 'DELETE',
     url: 'about/skills/' + id,
-    types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE],
+    types: [REQUEST, null, FAILURE, DELETE_SUCCESS],
+    auth: false,
+    extraData: {id}
+  });
+}
+
+export function postSkill(data) {
+  return fetch({
+    method: 'POST',
+    url: 'about/skills/',
+    types: [null, null, null],
+    auth: false,
+    data
+  });
+}
+
+export function getSkill(id) {
+  return fetch({
+    url: 'about/skills/' + id + '/',
+    types: [null, null, null],
     auth: false
+  });
+}
+
+export function putSkill(data, id) {
+  return fetch({
+    method: 'PUT',
+    url: 'about/skills/' + id + '/',
+    types: [null, null, null],
+    auth: false,
+    data
   });
 }

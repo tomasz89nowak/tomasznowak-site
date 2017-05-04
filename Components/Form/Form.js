@@ -1,59 +1,139 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {Field}  from '../Form';
+import Router from 'next/router';
+
+
+function getInitialState(fields) {
+  let obj = {};
+  fields.forEach(field => {
+    obj[field.name] = field.init || ''
+  });
+  return obj;
+}
+
+function getInitialData(fields, data) {
+  if(!data) {
+    return undefined;
+  }
+  let obj = {};
+  fields.forEach(field => {
+    obj[field.name] = data[field.name]
+  });
+
+  return obj;
+}
 
 class Form extends React.Component {
-  static getInitialProps(){
+  constructor({initialData, data}) {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.getProps = this.getProps.bind(this);
+    this.submit = this.submit.bind(this);
+    this.composeDataObject = this.composeDataObject.bind(this);
+    const initialState = getInitialState(data.fields);
+    const initData = getInitialData(data.fields, initialData);
+    this.state = initData || initialState;
+  }
+  static getInitialProps() {
     return {};
   }
-  state = {};
 
-  handleChange = ({target}) => {
-    const name = target.name;
-    const type = target.type;
-    const checked = target.checked;
-    let newState;
-    switch (type) {
-      case 'checkbox':
-        newState = {[name]: checked};
-        break;
-      case 'select-multiple':
-        let values = [...target.options].filter(option => option.selected).map(option => {
-          if(isNaN(option.value) === true){
-            return option.value;
-          } else {
-            return parseFloat(option.value);
-          }
-        });
-        newState = {[name]: values};
-        break;
-      default:
-        newState = {[name]: target.value};
-        break;
+  handleChange(newState) {
+    this.setState(newState);
+  }
+
+  postOrPut = (data) => {
+    const {post, put, url: {query = {}}} = this.props;
+    if(this.props.initialData) {
+      return put(data, query.id);
+    } else {
+      return post(data);
     }
-    this.setState(()=>newState, ()=>{
-      if(this.props.onChange){
-        this.props.onChange(this.state, newState);
+  };
+
+  composeDataObject() {
+    const {sendOnly, formdata} = this.props;
+    let data = {};
+
+    if(formdata) {
+      return new FormData(this.form);
+    }
+
+    if(sendOnly) {
+      sendOnly.forEach(attr => {
+        data[attr] = this.state[attr];
+      });
+    } else {
+      data = this.state;
+    }
+
+    return data;
+
+  }
+
+  submit(e) {
+    e.preventDefault();
+    const {callback} = this.props;
+    const data = this.composeDataObject();
+    this.props.dispatch(this.postOrPut(data)).then(({status, error}) =>{
+      if(status === 'success') {
+        if(callback) {
+          if(typeof callback === 'string') {
+            Router.push(callback);
+          } else {
+            callback();
+          }
+        }
+      } else {
+        this.setState({'#error#': error});
       }
     });
-  };
+  }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSubmit(this.state);
-  };
+  getProps(name){
+    return {
+      name,
+      value: this.state[name],
+      className: 'form-control',
+      error: this.state['#error#'],
+      label: name
+    }
+  }
 
-  render(){
+  renderFields() {
+    const {data: {fields}} = this.props;
     return (
-      <form action="#" onChange={this.handleChange} onSubmit={this.handleSubmit}>
-        {this.props.children}
-      </form>
+      <div>
+        {fields.map(field => (
+          <Field
+            {...this.getProps(field.name)}
+            key={field.name}
+            type={field.type}
+            field={field.field}
+            onChange={field.field === 'file' ? undefined : this.handleChange}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  render() {
+    const {data: {submitText}} = this.props;
+
+    return (
+      <div className="sm-6 sm-offset-3">
+        <div className="panel">
+          <div className="panel-body">
+            <form className="form" onSubmit={this.submit} ref={form => this.form = form}>
+              {this.renderFields()}
+              <button type="submit">{submitText || 'Submit'}</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
     )
   }
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func
-};
 
 export default Form;

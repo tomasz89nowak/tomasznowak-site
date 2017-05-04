@@ -4,13 +4,26 @@ import {initStore} from '../store';
 
 import Head from 'next/head';
 import AdminContainer from '../Components/AdminContainer';
-import {getAbout} from '../ducks/about';
+import {getAbout, putAbout} from '../ducks/about';
 
 import {STATIC_URL} from '../ENDPOINTS';
+import {Form} from '../Components/Form';
 
 class EditAbout extends React.Component {
   constructor() {
     super();
+    this.formJson = {
+      fields: [
+        {name: 'name'},
+        {name: 'title'},
+        {name: 'image', field: 'file'},
+        {name: 'linkedin'},
+        {name: 'facebook'},
+        {name: 'twitter'},
+        {name: 'github'}
+      ],
+      submitText: 'Wyślij'
+    }
   }
 
   static getInitialProps({store, isServer}) {
@@ -22,14 +35,24 @@ class EditAbout extends React.Component {
   }
 
   render() {
-    const {about, isFetching} = this.props;
+    const {about, isFetching, error} = this.props;
     return (
       <AdminContainer>
         <Head>
           <title>Tomasz Nowak - CMS: edit user</title>
         </Head>
-        {about && !isFetching &&
-        <div>tutaj formularz</div>
+        {about &&
+        <div>
+          <Form
+            data={this.formJson}
+            error={error}
+            put={putAbout}
+            dispatch={this.props.dispatch}
+            initialData={about}
+            callback="/admin?tab=about"
+            formdata
+          />
+        </div>
         }
       </AdminContainer>
     )

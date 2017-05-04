@@ -11,11 +11,13 @@ import Header from '../Components/Header';
 import AdminContainer from '../Components/AdminContainer';
 import {ArticlesList} from '../Components/Administration';
 import {UsersList} from '../Components/Administration';
+import {SkillsList} from '../Components/Administration';
 import {AboutData} from '../Components/Administration';
 
 import {getArticles} from '../ducks/articles';
 import {getUsers} from '../ducks/users';
 import {getAbout} from '../ducks/about';
+import {getSkills} from '../ducks/skills';
 
 
 class Admin extends React.Component {
@@ -39,7 +41,8 @@ class Admin extends React.Component {
     return {
       articles: dispatch.bind(this, getArticles()),
       users: dispatch.bind(this, getUsers()),
-      about: dispatch.bind(this, getAbout())
+      about: dispatch.bind(this, getAbout()),
+      skills: dispatch.bind(this, getSkills())
     }
   };
 
@@ -62,7 +65,7 @@ class Admin extends React.Component {
 
 
   render() {
-    const {url, articles, users, about, dispatch} = this.props;
+    const {url, articles, users, about, skills, dispatch} = this.props;
     return (
       <AdminContainer>
         <div className="sm-4 admin__sidebar">
@@ -71,6 +74,7 @@ class Admin extends React.Component {
               <Link href="/admin?tab=users"><a className={this.getActiveTab('users')}>użytkownicy</a></Link>
               <Link href="/admin?tab=articles"><a className={this.getActiveTab('articles')}>artykuły</a></Link>
               <Link href="/admin?tab=about"><a className={this.getActiveTab('about')}>O mnie</a></Link>
+              <Link href="/admin?tab=skills"><a className={this.getActiveTab('skills')}>Umiejętności</a></Link>
             </div>
           </div>
         </div>
@@ -82,6 +86,7 @@ class Admin extends React.Component {
               <Tab tab={url.query.tab} name="users"><UsersList users={users} dispatch={dispatch} /></Tab>
               <Tab tab={url.query.tab} name="articles"><ArticlesList articles={articles} dispatch={dispatch} /></Tab>
               <Tab tab={url.query.tab} name="about"><AboutData about={about} dispatch={dispatch} /></Tab>
+              <Tab tab={url.query.tab} name="skills"><SkillsList skills={skills} dispatch={dispatch} /></Tab>
             </div>
           </div>
         </div>
@@ -104,7 +109,8 @@ function mapState(state){
     auth: state.auth.result,
     articles: state.articles.result || [],
     users: state.users.result || [],
-    about: state.about.result || {}
+    about: state.about.result || {},
+    skills: state.skills.result || []
   }
 }
 

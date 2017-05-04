@@ -59,7 +59,6 @@ class About extends React.Component {
             <div key={skill._id} className="text-center md-4 sm-6">
               <div className="panel">
                 <div className="panel-body">
-                  <button onClick={()=>this.props.dispatch(deleteSkill(skill._id))}>delete</button>
                   <h3>{skill.name}</h3>
                   <Progress progress={skill.progress} />
                 </div>

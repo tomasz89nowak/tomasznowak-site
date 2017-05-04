@@ -14,3 +14,13 @@ export function getAbout() {
     auth: false
   });
 }
+
+export function putAbout(data) {
+  return fetch({
+    method: 'PUT',
+    url: 'about/',
+    types: [GET_REQUEST, GET_SUCCESS, GET_FAILURE],
+    auth: false,
+    data
+  });
+}

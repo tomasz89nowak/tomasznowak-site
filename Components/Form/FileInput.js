@@ -1,4 +1,5 @@
 import React from 'react';
+import {STATIC_URL} from '../../ENDPOINTS';
 
 const adaptFileEventToValue = (delegate, preview) =>
   e => {
@@ -49,7 +50,7 @@ export class FileInput extends React.Component {
         <label>{label}</label>
         <div>
           {value || this.state.preview !== null ? // preview is null only when file is too big to make blob
-            <img src={this.state.preview || value} alt={name} className="file-thumb" />
+            <img src={this.state.preview || STATIC_URL + value} alt={name} className="file-thumb" />
             :
             <span className="file-thumb">Brak podglądu</span>
           }
