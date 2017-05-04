@@ -7,7 +7,7 @@
     "dev": "next",
     "prod": "next start",
     "build": "next build",
-    "start": "npm-run-all -p build-css build prod",
+    "start": "npm-run-all -p build-css && npm run build && npm run prod",
     "start:dev": "npm-run-all -p watch-css dev",
     "start:prod": "npm-run-all -p build-css prod",
     "build-css": "node-sass styles/pages/ -o static/css/",
